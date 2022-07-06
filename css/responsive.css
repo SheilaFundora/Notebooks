@@ -1,0 +1,41 @@
+
+@media  screen and (max-width: 575px) {
+    .new_note_form{
+        background-size: 140px;
+    }
+    .pl-form{
+        padding-left: 230px;
+    }
+}
+
+@media  screen and (max-width: 768px){
+    .new_note_form{
+        background-size: 230px;;
+    }
+    .pl-form{
+        padding-left: 200px;
+    }
+
+}
+
+@media  screen and (max-width: 991px) {
+    .new_note_form{
+       background-size: 300px;
+    }
+    .pl-form{
+        padding-left: 280px;
+    }
+    .m-links{
+        margin-left: 0!important;
+    }
+
+}
+@media  screen and (max-width: 1136px) {
+
+    .m-links{
+        margin-left: 25%;
+    }
+
+}
+
+
