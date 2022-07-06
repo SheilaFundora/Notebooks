@@ -83,6 +83,7 @@ $db = GetDB();
                     </a>
                 </div>
 
+                <!--
                 <div class="dropdown mt-5 ml-2">
                     <a class="dropdown-toggle p-0 text-dark text-decoration-none" data-toggle="dropdown">Order By</a>
                     <div class="dropdown-menu">
@@ -92,7 +93,55 @@ $db = GetDB();
                         <a href="index.php" class="dropdown-item">Fav</a>
                     </div>
                 </div>
+                -->
 
+                <br><br>
+
+                <div class="d-flex justify-content-between flex-wrap">
+                    <div class="card mt-5">
+                        <div class="card-header-mine p-3 text-center text-white">Asignatura</div>
+                        <div class="m-auto text-center">
+                            <img src="img/3.png" class="img-fluid w-50">
+                        </div>
+
+                        <div class="card-body">
+                            <h3 class="card-title">Aqui va el titulo</h3>
+                            <div class="d-flex justify-content-between">
+                                <p class="card-text text-secondary">2/09/2020</p>
+                                <button id="btn-fav" class="card-text text-secondary bg-transparent border-0">
+                                    <span class="mdi mdi-star text-warning" style="font-size: 26px"></span>
+                                </button>
+                            </div>
+                            <div>
+                                <p class="text-justify">
+                                    VNHKhfvnkJDFHVOAHFGIPAJGBIAJGRBIOJAWTOIGJWTIOHJBAOIJAIORT
+                                    VNHKhfvnkJDFHVOAHFGIPAJGBIAJGRBIOJAWTOIGJWTIOHJBAOIJAIORT
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <form method="get" action="index.php">
+                                    <button class="card-btn" style="background: var(--blue-dark); color: white">
+                                        Edit
+                                    </button>
+                                </form>
+                                <form method="get" action="index.php">
+                                    <button class="card-btn" style="background: var(--blue-dark); color: white">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
 
                 <div class="mt-5 text-center">
                     <?php
@@ -125,76 +174,7 @@ $db = GetDB();
                 </div>
 
 
-                <br>
-                <br>
 
-                <table class="table mt-5  mr-5 table-striped table-hover">
-                    <thead style="background-color: var(--blue-dark)" class="text-white">
-                        <tr>
-                            <th>#</th>
-                            <th>Course</th>
-                            <th>Tittle</th>
-                            <th>Date</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-
-            </div>
 
 
             <div class="col-12 col-ms-12 col-lg-2"></div>
