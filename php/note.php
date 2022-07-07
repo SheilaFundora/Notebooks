@@ -90,8 +90,7 @@
                     <div class="text-center">
                         <button class="btn text-white mt-2 pt-2 pb-2 w-25 btn-safe-nota"
                                 data-target="#mymodal" data-toggle="modal">Safe</button>
-                        <button class="btn text-white mt-2 pt-2 pb-2 w-25 btn-safe-nota ml-5"
-                                data-target="#mymodal" data-toggle="modal">exit</button>
+
                         <?= $added?  "
                             <div class=\"modal fade\" id=\"mymodal\">
                                 <div class=\"modal-dialog  bg-white\">

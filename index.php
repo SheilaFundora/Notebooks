@@ -66,7 +66,7 @@
         <div class="navbar-collapse pt-1 flex-grow-0 m-links">
             <ol class="navbar-nav">
                 <li class="nav-item ">
-                    <a class="nav-link active link-header" href="http://localhost/webs/AlgorithmsJs/index.html">
+                    <a class="nav-link active link-header" href="tools/index.html">
                         Tools
                         <div class="link-hov"></div>
                     </a>
@@ -129,25 +129,27 @@
                 -->
 
                 <?php
-                $sqlQuery = "SELECT * FROM notas";
+                $sqlQuery = "SELECT * FROM notas where id_user=:id_user";
 
                 if( !empty($_GET['buscar']) ){
                     $buscar = $_GET['buscar'];
-                    $sqlQuery .= " WHERE course LIKE '%$buscar%' OR tittle LIKE '%$buscar%' OR text LIKE '%$buscar%'" ;
+                    $sqlQuery .= " and course LIKE '%$buscar%' OR tittle LIKE '%$buscar%' OR text LIKE '%$buscar%'" ;
                 }
 
                 $statement = $db->prepare($sqlQuery);
-                $statement->execute();
+                $statement->execute(array( //ejecutando el statemen con los valores del formulario
+                    ":id_user"=>$_SESSION['userId'],
+                ));
 
                 $file = $statement->fetchAll(PDO::FETCH_ASSOC);
 
                 if( sizeof($file) == 0 ) {
                     ?>
-                    <h1>Lo Sentimos no hay datos!!</h1>
+                    <h1 class="mt-5 text-center">Sorry no data!!!</h1>
                     <?php
                 }
                 ?>
-                <div class="d-flex justify-content-between flex-wrap">
+                <div class="d-flex justify-content-center flex-wrap">
 
                     <?php
                 foreach ( $file as $notas){

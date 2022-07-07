@@ -13,7 +13,6 @@
         if ( empty($_POST['confirm_password'] ) ){
             $errors['confirm_password'] = "This file is required";
         }else{
-
             if( $_POST['password'] != $_POST['confirm_password'] ){
                 $errors['general'] = "The passwords are not the same";
             }
@@ -32,6 +31,8 @@
                     ':username'=>$user,
                     ':password'=>$pass
                 ));
+
+                echo($values);
 
                 if ( empty($values) ) {
                     $errors['general'] = "User already exits";
@@ -100,7 +101,7 @@
             <small style="color: red"><?= empty($errors['confirm_password'])? "" : $errors['confirm_password']  ?></small>
 
               <div style="margin-top: 15px; margin-bottom: 30px; color: red">
-                  <?= empty($errors['gçeneral']) ? "":$errors["general"] ?><!--error generl, e que el usuario o la pass
+                  <?= empty($errors['general']) ? "":$errors["general"] ?><!--error generl, e que el usuario o la pass
                     no esta correcto-->
               </div>
 
