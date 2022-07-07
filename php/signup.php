@@ -71,7 +71,7 @@
 <body class="back-page">
     <main class="test">
 
-      <h2 class="text-center text-white">Block de notas</h2>
+      <h2 class="text-center text-white">Notebook</h2>
 
       <div class="log position-relative">
         <a href="signin.php" class=" position-absolute p-0 m-0" style="top: -3.4%; right: -1.3%">
@@ -85,14 +85,14 @@
         <div>
           <form method="post" action="signup.php">
             <label for="user">User:</label><br>
-            <input id ="user" type="text" class="w-100 mb-3" name="username" value="<?= empty($_POST['username'])? "":
+            <input id ="user" type="text" class="w-100" name="username" value="<?= empty($_POST['username'])? "":
                 $_POST['username']  ?>"><br>
-            <small style="color: red"><?= empty($errors['username'])? "" : $errors['username']  ?></small><br>
+            <small style="color: red" class="mt-2"><?= empty($errors['username'])? "" : $errors['username']  ?></small><br><br>
 
             <label for="pass">Password:</label><br>
-            <input id="pass" type="password" class="w-100 mb-3" name="password" value="<?= empty($_POST['password'])? "":
-                $_POST['password']  ?>"><br>
-            <small style="color: red"><?= empty($errors['password'])? "" : $errors['password']  ?></small><br>
+            <input id="pass" type="password" class="w-100" name="password" value="<?= empty($_POST['password'])? "":
+                $_POST['password']  ?>">
+            <small style="color: red"><?= empty($errors['password'])? "" : $errors['password']  ?></small><br><br>
 
             <label for="con_pass">Repeat password:</label><br>
             <input id="con_pass" type="password" class="w-100" name="confirm_password" value="<?= empty($_POST['confirm_password'])?

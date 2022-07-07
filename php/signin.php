@@ -69,7 +69,7 @@ if( strtoupper($_SERVER['REQUEST_METHOD'] ) == 'POST' ) {
 <body class="back-page">
     <main class="test">
 
-    <h2 class="text-center text-white mt-5">Block de notas</h2>
+    <h2 class="text-center text-white mt-5">Notebook</h2>
 
     <div class="log">
         <div class="text-center">
@@ -79,16 +79,17 @@ if( strtoupper($_SERVER['REQUEST_METHOD'] ) == 'POST' ) {
         <div>
             <form method="post">
                 <label for="user">User:</label><br>
-                <input id="user" value="<?= empty($_POST['user'])?"":$_POST['user'] ?>" type="text" name="user" class="w-100 mb-3"><br>
+                <input id="user" value="<?= empty($_POST['user'])?"":$_POST['user'] ?>" type="text" name="user" class="w-100"><br>
                 <!--value=empty($_POST['user'])?"":$_POST['user'], esto es para q si esta mal no se borre el valor del input-->
                 <small style="color: red"><?= empty($errors['user'])? "" : $errors['user'] ?></small>
                 <!--el small es para salga el sms d error, si el $errors['user'] (diccionario en valor )esta vacio no
                  muestra nada sino muestra el error que hay -->
                 <br>
+                <br>
                 <label for="password">Password:</label><br>
                 <input id="password" value="<?= empty($_POST['password'])?"":$_POST['password'] ?>" type="password" name="password" class="w-100">
                 <small style="color: red"><?= empty($errors['password'])? "" : $errors['password']  ?></small>
-
+                <br>
                 <div style="margin-top: 15px; margin-bottom: 10px; color: red">
                     <?= empty($errors['general']) ? "":$errors["general"] ?><!--error generl, e que el usuario o la pass
                     no esta correcto-->

@@ -156,8 +156,7 @@ form small{
     background: white;
     cursor: pointer;
     transition: all .4s;
-    font-size: 19px;
-
+    font-size: 18px;
 }
 
 .card-btn:hover{
@@ -165,7 +164,6 @@ form small{
     transition: all .4s;
 }
 input{
-    margin: 10px;
     font-size: 14px;
     padding: 8px;
     border-radius: 8px;
@@ -179,19 +177,28 @@ input:hover{
     transition: all .4s;
 }
 
-.card{
+.card {
     border-radius: 15px;
-    width: 30%;
+    width: 300px;
+    margin: 0 5px 0 5px;
+    padding-bottom: 10px;
 }
+
 .card:hover{
     box-shadow: 5px 5px 30px rgba(128, 128, 128, 0.38);
 }
 
+
 .card-header-mine{
     font-size: 22px;
     font-weight: bold;
-    background-color: var(--blue-dark);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     margin-bottom: 15px;
+}
+
+.index-header{
+    position: sticky;
+    z-index: 1;
+    top: 0;
 }

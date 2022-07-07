@@ -1,17 +1,47 @@
 <?php
-session_start();
-if( empty($_SESSION['userId']) ){
-    header("Location: php/signin.php");
-}
+    global $id;
+    session_start();
+    if( empty($_SESSION['userId']) ){
+        header("Location: php/signin.php");
+    }
 
-require_once('php/Database.php');
+    require_once('php/Database.php');
 
-$db = GetDB();
+    $db = GetDB();
 
+    $fav = false;
+
+    if ( !empty($_GET['id'])) {
+        $id = $_GET["id"];
+        $query = "delete from notas where id=:id";
+
+        $statement = $db->prepare($query);
+        $value = $statement->execute(array(
+            ":id" => $id
+        ));
+    }
+
+    if ( !empty($_POST['id']) ) {
+        $id = $_POST["id"];
+
+        $query = "update notas set fav=:fav where id=:id";
+
+        $statement = $db->prepare($query);
+        $value = $statement->execute(array(
+            ":fav" => 1,
+            ":id" => $id
+        ));
+
+        echo ($value);
+        echo ($id);
+        if( !empty($value) ){
+            $fav = true;
+        }
+    }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="font/css/materialdesignicons.min.css" media="all">
@@ -23,9 +53,9 @@ $db = GetDB();
 </head>
 <body>
 
-<header class="mt-0">
+    <header class="mt-0 index-header">
 
-    <nav class="navbar navbar-expand-lg pt-2 pb-3 pl-5 pr-5 justify-content-between" style="background-color: var(--blue-dark)" >
+    <nav class="navbar navbar-expand-lg pt-2 pb-2 pl-5 pr-5 justify-content-between" style="background-color: var(--blue-dark)" >
         <div>
             <a href="index.php" class="m-auto text-white text-decoration-none" style="font-size: 25px">
                 <h2>Welcome <?= $_SESSION["username"]?></h2>
@@ -70,17 +100,20 @@ $db = GetDB();
     <main class="container-fluid">
         <div class="row">
             <div class="col-12 col-ms-12 col-lg-1" ></div>
-            <div class="col-12 col-ms-12 col-lg-9 pl-5 pr-5">
-                <div class="d-flex mt-5 pt-2 justify-content-between">
+            <div class="col-12 col-ms-12 col-lg-10 pl-5 pr-5">
+                <div class="d-flex mt-5 pt-2 pb-4 justify-content-between">
                     <form method="GET" action="index.php">
-                        <input name="buscar" >
-                        <button class="card-btn">Search</button>
+                        <input name="buscar" style="padding: 10px">
+                        <button class="card-btn ml-4">Search</button>
                     </form>
-                    <a href="php/note.php" class="">
-                        <button class="card-btn" style="background: var(--blue-dark); color: white">
-                            New note
-                        </button>
-                    </a>
+                    <div class="ml-4">
+                        <a href="php/note.php">
+                            <button class="card-btn" style="background: var(--blue-dark); color: white">
+                                New note
+                            </button>
+                        </a>
+                    </div>
+
                 </div>
 
                 <!--
@@ -95,89 +128,89 @@ $db = GetDB();
                 </div>
                 -->
 
-                <br><br>
+                <?php
+                $sqlQuery = "SELECT * FROM notas";
 
+                if( !empty($_GET['buscar']) ){
+                    $buscar = $_GET['buscar'];
+                    $sqlQuery .= " WHERE course LIKE '%$buscar%' OR tittle LIKE '%$buscar%' OR text LIKE '%$buscar%'" ;
+                }
+
+                $statement = $db->prepare($sqlQuery);
+                $statement->execute();
+
+                $file = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                if( sizeof($file) == 0 ) {
+                    ?>
+                    <h1>Lo Sentimos no hay datos!!</h1>
+                    <?php
+                }
+                ?>
                 <div class="d-flex justify-content-between flex-wrap">
-                    <div class="card mt-5">
-                        <div class="card-header-mine p-3 text-center text-white">Asignatura</div>
-                        <div class="m-auto text-center">
-                            <img src="img/3.png" class="img-fluid w-50">
+
+                    <?php
+                foreach ( $file as $notas){
+                    ?>
+                        <div class="card mt-5">
+                            <div class="card-header-mine p-3 text-center"><?= $notas['course']?></div>
+                            <div class="m-auto text-center">
+                                <img src="img/3.png" class="img-fluid " style="width: 40%">
+                            </div>
+
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="card-title"><?= $notas['tittle']?></h4>
+                                    <form method="post" action="index.php">
+
+                                        <button type="submit" id="btn-fav" class="card-text bg-transparent border-0"
+                                                value="fav" name="fav">
+
+                                            <span class="mdi mdi-star" style="font-size: 26px;
+                                            color: <?= $fav ? "#f9c409": "#f9c409"?>"></span>
+                                        </button>
+                                    </form>
+
+                                </div>
+                                <p class="card-text text-secondary" style="font-size: 14px"><?= $notas['date_note']?></p>
+
+                                <div>
+                                    <p class="text-justify">
+                                        <?php if(strlen($notas['text'] < 80) ) {
+                                            $text_limit = substr($notas['text'], 0, 80); ?>
+                                            <?= $text_limit ?>
+                                            <span>...</span>
+                                            <?php }else{ ?>
+                                            <?= $notas['text'] ?>
+                                        <?php } ?>
+                                    </p>
+                                </div>
+                                <br>
+                                <div class="d-flex justify-content-between ">
+                                    <!--
+                                    <form method="post" action="index.php">
+                                        <input name="id" class="d-none" value="<?= $notas['id']?>">
+                                        <button  class="card-btn" style="background: var(--blue-dark); color: white">
+                                            Edit
+                                        </button>
+                                    </form>
+                                    -->
+                                    <form  method="get" action="index.php" class="m-auto">
+                                        <input name="id" class="d-none" value="<?= $notas['id']?>">
+                                        <button  class="card-btn" style="background: var(--blue-dark); color: white">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="card-body">
-                            <h3 class="card-title">Aqui va el titulo</h3>
-                            <div class="d-flex justify-content-between">
-                                <p class="card-text text-secondary">2/09/2020</p>
-                                <button id="btn-fav" class="card-text text-secondary bg-transparent border-0">
-                                    <span class="mdi mdi-star text-warning" style="font-size: 26px"></span>
-                                </button>
-                            </div>
-                            <div>
-                                <p class="text-justify">
-                                    VNHKhfvnkJDFHVOAHFGIPAJGBIAJGRBIOJAWTOIGJWTIOHJBAOIJAIORT
-                                    VNHKhfvnkJDFHVOAHFGIPAJGBIAJGRBIOJAWTOIGJWTIOHJBAOIJAIORT
-                                </p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <form method="get" action="index.php">
-                                    <button class="card-btn" style="background: var(--blue-dark); color: white">
-                                        Edit
-                                    </button>
-                                </form>
-                                <form method="get" action="index.php">
-                                    <button class="card-btn" style="background: var(--blue-dark); color: white">
-                                        Delete
-                                    </button>
-                                </form>
-                            </div>
-
-
-                        </div>
-
-
-
-                    </div>
+                <?php } ?>
                 </div>
-
-
 
             </div>
 
-                <div class="mt-5 text-center">
-                    <?php
-                    $sqlQuery = "SELECT * FROM notas";
-
-                    if( !empty($_GET['buscar']) ){
-                        $buscar = $_GET['buscar'];
-                        $sqlQuery .= " WHERE course LIKE '%$buscar%' OR tittle LIKE '%$buscar%' OR text LIKE '%$buscar%'" ;
-                    }
-
-                    $statement = $db->prepare($sqlQuery);
-                    $statement->execute();
-
-                    $file = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-                    if( sizeof($file) == 0 ) {
-                        ?>
-                        <h1>Lo Sentimos no hay datos!!</h1>
-                        <?php
-                    }
-
-                    foreach ( $file as $notas){
-                        ?>
-                        <div>
-                            <div><?= $notas['course']?></div>
-                            <div><?= $notas['tittle'] ?></div>
-                            <div><?= $notas['text']?></div>
-                        </div>
-                    <?php } ?>
-                </div>
-
-
-
-
-
-            <div class="col-12 col-ms-12 col-lg-2"></div>
+            <div class="col-12 col-ms-12 col-lg-1"></div>
         </div>
 
 
@@ -185,6 +218,7 @@ $db = GetDB();
 
     </main>
 
+    <footer class="mt-5"></footer>
 
 
 

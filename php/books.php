@@ -20,6 +20,6 @@ if (empty($_SESSION['userId'])) {
 <body>
 
 <header class="mt-0">
-    <h1 class="mt-5 text-center">Books</h1>
+    <h1 class="mt-5 text-center">No hay libros en estos momentos</h1>
 </body>
 </html>
